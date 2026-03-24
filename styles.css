@@ -39,6 +39,7 @@ If your plugin does not need CSS, delete this file.
     height: var(--sprite-size, 32px);
     background-size: contain;
     background-repeat: no-repeat;
+    transform-origin: center;
     z-index: 1;
     image-rendering: pixelated;
     image-rendering: crisp-edges;

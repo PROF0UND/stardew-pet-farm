@@ -23,7 +23,7 @@ export class StardewView extends ItemView {
         return "paw-print"; // Or some icon, maybe "leaf" or custom
     }
 
-    async onOpen() {
+    onOpen() {
         const container = this.contentEl;
         container.empty();
         container.addClass('stardew-container');
@@ -35,7 +35,9 @@ export class StardewView extends ItemView {
 
         // Set background image from vault sprites folder
         const bgUrl = this.getPluginResourcePath('sprites/backgrounds/grass.png');
-        farm.style.backgroundImage = `url('${bgUrl}')`;
+        farm.setCssProps({
+            "background-image": `url('${bgUrl}')`,
+        });
 
         // Add one of each animal
         for (const specie of Object.keys(this.ANIMAL_CONFIG)) {
@@ -100,9 +102,11 @@ export class StardewView extends ItemView {
         const startX = Math.random() * maxX;
         const startY = Math.random() * maxY;
 
-        animal.style.left = `${startX}px`;
-        animal.style.top = `${startY}px`;
-        animal.style.setProperty("--sprite-size", `${fallbackSize * config.scale}px`);
+        animal.setCssProps({
+            left: `${startX}px`,
+            top: `${startY}px`,
+            "--sprite-size": `${fallbackSize * config.scale}px`,
+        });
 
         const animalState = {
             el: animal,
@@ -118,13 +122,17 @@ export class StardewView extends ItemView {
 
         engine.load().then(() => {
             const size = engine.getFrameSize() * config.scale;
-            animal.style.setProperty("--sprite-size", `${size}px`);
+            animal.setCssProps({
+                "--sprite-size": `${size}px`,
+            });
             const maxLoadedX = Math.max(0, farmEl.clientWidth - size);
             const maxLoadedY = Math.max(0, farmEl.clientHeight - size);
             animalState.x = Math.max(0, Math.min(maxLoadedX, animalState.x));
             animalState.y = Math.max(0, Math.min(maxLoadedY, animalState.y));
-            animal.style.left = `${animalState.x}px`;
-            animal.style.top = `${animalState.y}px`;
+            animal.setCssProps({
+                left: `${animalState.x}px`,
+                top: `${animalState.y}px`,
+            });
         }).catch((err) => console.error(err));
     }
 
@@ -289,8 +297,10 @@ export class StardewView extends ItemView {
                 const nextY = startY + segment.dy * progress;
                 animalState.x = Math.max(0, Math.min(maxX, nextX));
                 animalState.y = Math.max(0, Math.min(maxY, nextY));
-                animalState.el.style.left = `${animalState.x}px`;
-                animalState.el.style.top = `${animalState.y}px`;
+                animalState.el.setCssProps({
+                    left: `${animalState.x}px`,
+                    top: `${animalState.y}px`,
+                });
 
                 if (progress < 1) {
                     animalState.walkRaf = requestAnimationFrame(step);
@@ -305,7 +315,7 @@ export class StardewView extends ItemView {
         walkSegment(0);
     }
 
-    async onClose() {
+    onClose() {
         this.pauseAnimations();
         this.animals = [];
     }

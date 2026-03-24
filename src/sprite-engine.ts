@@ -42,7 +42,9 @@ export class SpriteEngine {
     }
 
     async load() {
-        this.el.style.backgroundImage = `url('${this.spriteUrl}')`;
+        this.el.setCssProps({
+            "background-image": `url('${this.spriteUrl}')`,
+        });
         const img = new Image();
         await new Promise<void>((resolve, reject) => {
             img.onload = () => resolve();
@@ -52,7 +54,9 @@ export class SpriteEngine {
         const rows = this.getMaxRow() + 1;
         const inferred = rows > 0 ? Math.floor(img.naturalHeight / rows) : 16;
         this.frameSize = (this.def.frameSize && this.def.frameSize > 0) ? this.def.frameSize : inferred;
-        this.el.style.backgroundSize = `${img.naturalWidth * this.def.scale}px ${img.naturalHeight * this.def.scale}px`;
+        this.el.setCssProps({
+            "background-size": `${img.naturalWidth * this.def.scale}px ${img.naturalHeight * this.def.scale}px`,
+        });
         this.setFrame([0, 0]);
     }
 
@@ -101,14 +105,17 @@ export class SpriteEngine {
     private setFlip(flip: boolean) {
         if (this.flipped === flip) return;
         this.flipped = flip;
-        this.el.style.transform = flip ? "scaleX(-1)" : "scaleX(1)";
-        this.el.style.transformOrigin = "center";
+        this.el.setCssProps({
+            transform: flip ? "scaleX(-1)" : "scaleX(1)",
+        });
     }
 
     setFrame(frame: Frame) {
         const x = -(frame[0] * this.frameSize) * this.def.scale;
         const y = -(frame[1] * this.frameSize) * this.def.scale;
-        this.el.style.backgroundPosition = `${x}px ${y}px`;
+        this.el.setCssProps({
+            "background-position": `${x}px ${y}px`,
+        });
     }
 
     getFrameSize() {
