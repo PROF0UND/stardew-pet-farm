@@ -26,7 +26,7 @@ Inspired by [BOTPanzer](https://github.com/BOTPanzer/Stardew-Pets). Thank you so
 
 ## Development
 
-- Clone the git repo in your plugnis folder.
+- Clone the git repo in your plugins folder.
 - Install: `npm install`
 - Dev build: `npm run dev`
 
