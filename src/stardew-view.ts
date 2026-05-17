@@ -102,9 +102,8 @@ export class StardewView extends ItemView {
         const startX = Math.random() * maxX;
         const startY = Math.random() * maxY;
 
+        this.updateAnimalPosition(animal, startX, startY);
         animal.setCssProps({
-            left: `${startX}px`,
-            top: `${startY}px`,
             "--sprite-size": `${fallbackSize * config.scale}px`,
         });
 
@@ -129,10 +128,7 @@ export class StardewView extends ItemView {
             const maxLoadedY = Math.max(0, farmEl.clientHeight - size);
             animalState.x = Math.max(0, Math.min(maxLoadedX, animalState.x));
             animalState.y = Math.max(0, Math.min(maxLoadedY, animalState.y));
-            animal.setCssProps({
-                left: `${animalState.x}px`,
-                top: `${animalState.y}px`,
-            });
+            this.updateAnimalPosition(animal, animalState.x, animalState.y);
         }).catch((err) => console.error(err));
     }
 
@@ -297,10 +293,7 @@ export class StardewView extends ItemView {
                 const nextY = startY + segment.dy * progress;
                 animalState.x = Math.max(0, Math.min(maxX, nextX));
                 animalState.y = Math.max(0, Math.min(maxY, nextY));
-                animalState.el.setCssProps({
-                    left: `${animalState.x}px`,
-                    top: `${animalState.y}px`,
-                });
+                this.updateAnimalPosition(animalState.el, animalState.x, animalState.y);
 
                 if (progress < 1) {
                     animalState.walkRaf = requestAnimationFrame(step);
@@ -359,6 +352,14 @@ export class StardewView extends ItemView {
         const key = specie.trim().toLowerCase();
         if (key in this.ANIMAL_CONFIG) return key;
         return null;
+    }
+
+    private updateAnimalPosition(animal: HTMLElement, x: number, y: number) {
+        animal.setCssProps({
+            left: `${x}px`,
+            top: `${y}px`,
+            "z-index": `${Math.round(y)}`,
+        });
     }
 
     private getPluginResourcePath(file: string) {
