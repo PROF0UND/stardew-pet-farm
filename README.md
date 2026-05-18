@@ -8,11 +8,14 @@ Inspired by [BOTPanzer](https://github.com/BOTPanzer/Stardew-Pets). Thank you so
 
 ## Open the view
 
+![Stardew-valley-pets-on-screen](Page_view.png)
+
+
 1. Open the Command Palette (`Ctrl+P`).
 2. Run `Stardew Pets Farm: Open stardew farm`.
 3. Enjoy!
 
-![Stardew-valley-pets-on-screen](Page_view.png)
+![Stardew-valley-pets-on-screen](Stardew_trail.gif)
 
 ## Features
 
